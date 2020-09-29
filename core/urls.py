@@ -10,12 +10,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'), name='login'),
-    path('', include('example.urls')),
+    path('', include('api.urls')),
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if not settings.DEBUG:
-    handler400 = 'example.views.bad_request'
-    handler403 = 'example.views.permission_denied'
-    handler404 = 'example.views.page_not_found'
-    handler500 = 'example.views.server_error'
+    handler400 = 'api.views.bad_request'
+    handler403 = 'api.views.permission_denied'
+    handler404 = 'api.views.page_not_found'
+    handler500 = 'api.views.server_error'
