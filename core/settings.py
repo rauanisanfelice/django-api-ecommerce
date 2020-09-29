@@ -9,12 +9,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$6g=h2d2h31*j&dd_+@-32d!4%!uyu6ts0@h92gmv!_^tamy&0'
+SECRET_KEY = config('SECRET_KEY', cast=bool)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -24,8 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'example',
-    'bootstrap4', # DEIXAR POR ULTIMO
+    'api',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -149,9 +149,10 @@ DEFAULT_FROM_EMAIL = config('DJANGO_EMAIL_USER')
 # AWS_QUERYSTRING_AUTH = False
 # AWS_S3_FILE_OVERWRITE = False
 
-import logging.config
-LOGGING_CONFIG = None
-logging.config.dictConfig({
+
+#############################################################
+# LOGGIN
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -177,11 +178,12 @@ logging.config.dictConfig({
             'class': 'logging.StreamHandler',
             'filters': ['require_debug_true'],
             'formatter': 'console',
+            'level': 'INFO',
         },
         'file': {
-            'level': config('LOGLEVEL'),
+            'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'django.log',
+            'filename': BASE_DIR+'/debug.log',
             'formatter': 'file',
             'maxBytes': 10 * 1024 * 1024, # 10MB
         },
@@ -193,7 +195,6 @@ logging.config.dictConfig({
         }
     },
     'loggers': {
-        # root logger
         '': {
             'level': config('LOGLEVEL'),
             'handlers': ['console', 'file'],
@@ -202,9 +203,8 @@ logging.config.dictConfig({
             'handlers': ['mail_admins'],
             'level': 'ERROR',
         },
-
         'django.db.backends': {
             'level': 'DEBUG',
         },
     },
-})
+}
