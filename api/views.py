@@ -1,48 +1,64 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.urls import reverse_lazy
-from django.views import generic
-from django.views.generic import View, DeleteView
+from rest_framework import mixins, generics
+ 
+from .models import Produto, Categoria
+from .serializers import ProdutoSerializer, CategoriaSerializer
 
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .forms import SignUpForm
 
-import datetime
-import json
+class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    """
+    List all products, or create a new product.
+    """
 
-import logging
-logger = logging.getLogger(__name__)
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
 
-########################################################################
-def bad_request(request, exeption):
-    context = {}
-    return render(request, 'error.html', context, status=400)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-def permission_denied(request, exeption):
-    context = {}
-    return render(request, 'error.html', context, status=403)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-def page_not_found(request, exeption):
-    context = {}
-    return render(request, 'error.html', context, status=404)
 
-def server_error(request):
-    context = {}
-    return render(request, 'error.html', context, status=500)
+class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
 
-########################################################################
-@login_required
-def index(request):
-    return redirect('login')
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
 
-class SignUp(generic.CreateView):
-    form_class = SignUpForm
-    success_url = reverse_lazy('home')
-    template_name = 'signup.html'
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
-class Home(View):
-    template_name = 'home.html'
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def get(self, request):
-        return render(request, self.template_name)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    """
+    List all products, or create a new product.
+    """
+
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class CategoriaDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
