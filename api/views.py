@@ -2,9 +2,10 @@ import logging
 
 from django.contrib.auth.models import User
 
-from rest_framework import mixins, generics, permissions
+from rest_framework import mixins, generics, permissions, viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.schemas.openapi import AutoSchema
 
 from .models import Produto, Categoria
 from .serializers import ProdutoSerializer, CategoriaSerializer, UserSerializer
@@ -14,6 +15,8 @@ logger = logging.getLogger(__name__)
 
 class UserList(generics.ListAPIView):
     """Lista todos usuários."""
+
+    schema = AutoSchema(tags=["usuarios"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -29,6 +32,8 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     """Detalhes do usuário."""
 
+    schema = AutoSchema(tags=["usuarios"])
+
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     
@@ -39,8 +44,11 @@ class UserDetail(generics.RetrieveAPIView):
         logger.info(f"UserDetail {request.method} ({request.user.username})")
         return super().dispatch(request, *args, **kwargs)
 
+
 class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     """Lista todos produtos, ou cria um novo produto."""
+
+    schema = AutoSchema(tags=["produtos"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -61,6 +69,8 @@ class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gener
 
 class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
     
+    schema = AutoSchema(tags=["produtos"])
+
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -84,6 +94,8 @@ class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
 class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     """Lista todas categorias, ou cria uma nova categoria."""
 
+    schema = AutoSchema(tags=["categorias"])
+
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -102,6 +114,8 @@ class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gen
 
 
 class CategoriaDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    
+    schema = AutoSchema(tags=["categorias"])
     
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
