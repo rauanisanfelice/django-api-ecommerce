@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 
 from rest_framework import mixins, generics, permissions
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Produto, Categoria
 from .serializers import ProdutoSerializer, CategoriaSerializer, UserSerializer
@@ -9,6 +11,9 @@ from .serializers import ProdutoSerializer, CategoriaSerializer, UserSerializer
 class UserList(generics.ListAPIView):
     """Lista todos usuários."""
 
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -16,14 +21,18 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     """Detalhes do usuário."""
 
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    """
-    Lista todos produtos, ou cria um novo produto.
-    """
+    """Lista todos produtos, ou cria um novo produto."""
+
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
@@ -36,6 +45,9 @@ class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gener
 
 
 class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
@@ -51,9 +63,10 @@ class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
 
 
 class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    """
-    Lista todas categorias, ou cria uma nova categoria.
-    """
+    """Lista todas categorias, ou cria uma nova categoria."""
+
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
@@ -67,6 +80,9 @@ class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gen
 
 class CategoriaDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
     
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
 
