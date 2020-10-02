@@ -12,10 +12,17 @@ class ProdutoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class CategoriaSerializer(serializers.ModelSerializer):
 
     class Meta:
 
         model = Categoria
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = User
         fields = '__all__'

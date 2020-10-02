@@ -1,12 +1,28 @@
-from rest_framework import mixins, generics
- 
+from django.contrib.auth.models import User
+
+from rest_framework import mixins, generics, permissions
+
 from .models import Produto, Categoria
-from .serializers import ProdutoSerializer, CategoriaSerializer
+from .serializers import ProdutoSerializer, CategoriaSerializer, UserSerializer
+
+
+class UserList(generics.ListAPIView):
+    """Lista todos usuários."""
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    """Detalhes do usuário."""
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     """
-    List all products, or create a new product.
+    Lista todos produtos, ou cria um novo produto.
     """
 
     queryset = Produto.objects.all()
@@ -36,7 +52,7 @@ class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
 
 class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     """
-    List all products, or create a new product.
+    Lista todas categorias, ou cria uma nova categoria.
     """
 
     queryset = Categoria.objects.all()
