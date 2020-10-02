@@ -113,8 +113,8 @@ STATICFILES_DIRS = [
 
 #############################################################
 # LOGIN / LOGOUT
-LOGIN_REDIRECT_URL = '/home/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/api/produtos/'
+LOGOUT_REDIRECT_URL = '/api-auth/login/'
 
 
 #############################################################
