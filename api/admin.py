@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import Produto, Categoria
 
-# Register your models here.
+
+@admin.register(Produto)
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Categoria)
+class AuthorAdmin(admin.ModelAdmin):
+    pass
