@@ -1,4 +1,8 @@
+# Gerar Secret Key => https://randomkeygen.com/
+SECRET_KEY=
+
 DEBUG=True
+LOGLEVEL=INFO
 
 DB_HOST=localhost
 DB_PORT=5432

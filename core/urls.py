@@ -1,21 +1,26 @@
-from django.conf.urls import handler400, handler403, handler404, handler500
 from django.urls import path, include
-
-from django.contrib.auth import views as auth_views
 from django.contrib import admin
+from django.views.generic import TemplateView
 
-from django.conf import settings
-from django.conf.urls.static import static
+from rest_framework.schemas import get_schema_view
+
+from api.views import UserList
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls'), name='login'),
-    path('', include('example.urls')),
-    
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('api/', include('api.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 
-if not settings.DEBUG:
-    handler400 = 'example.views.bad_request'
-    handler403 = 'example.views.permission_denied'
-    handler404 = 'example.views.page_not_found'
-    handler500 = 'example.views.server_error'
+    path('openapi-schema/', get_schema_view(
+        title="E-Commerce", 
+        description="Django API E-Commerce",
+        version="1.0.0",
+        public=True,
+    ), name='openapi-schema'), 
+
+    path('', TemplateView.as_view(
+        template_name='swagger-ui.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='swagger-ui'),
+]

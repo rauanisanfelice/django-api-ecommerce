@@ -3,7 +3,7 @@ version: "3"
 services:
     postgre:
         image: postgres:12
-        container_name: "POSTGRE"
+        container_name: "POSTGRE-ECOMMERCE"
         environment:
             - POSTGRES_DB=postgres
             - POSTGRES_USER=admin
@@ -11,35 +11,35 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - volume-potgre:/var/lib/postgresql:rw
-            - volume-postgre-data:/var/lib/postgresql/data:rw
+            - volume-ecommerce-potgre:/var/lib/postgresql:rw
+            - volume-ecommerce-postgre-data:/var/lib/postgresql/data:rw
         networks:
-            - network-postgres
+            - network-ecommerce
 
     pgadmin:
         image: dpage/pgadmin4:4.16
-        container_name: "PGADMIN"
+        container_name: "PGADMIN-ECOMMERCE"
         environment:
             PGADMIN_DEFAULT_EMAIL: "admin"
             PGADMIN_DEFAULT_PASSWORD: "admin"
         volumes:
-            - volume-pgadmin:/pgadmin4:rw
-            - volume-pgadmin-lib:/var/lib/pgadmin:rw
-            - volume-pgadmin-certs:/certs:rw
+            - volume-ecommerce-pgadmin:/pgadmin4:rw
+            - volume-ecommerce-pgadmin-lib:/var/lib/pgadmin:rw
+            - volume-ecommerce-pgadmin-certs:/certs:rw
         ports:
             - 80:80
         depends_on:
             - postgre
         networks:
-            - network-postgres
+            - network-ecommerce
 
 networks:
-    network-postgres:
+    network-ecommerce:
         driver: bridge
 
 volumes:
-    volume-potgre:
-    volume-postgre-data:
-    volume-pgadmin:
-    volume-pgadmin-lib:
-    volume-pgadmin-certs:
+    volume-ecommerce-potgre:
+    volume-ecommerce-postgre-data:
+    volume-ecommerce-pgadmin:
+    volume-ecommerce-pgadmin-lib:
+    volume-ecommerce-pgadmin-certs:
