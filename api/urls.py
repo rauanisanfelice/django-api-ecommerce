@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from .views import ProdutoList, ProdutoDetail, CategoriaList, CategoriaDetail, \
     UserList, UserDetail
 
+
 urlpatterns = [
     # Produtos
     path('produtos/', ProdutoList.as_view(), name='produto-list'),
