@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class UserList(generics.ListAPIView):
     """Lista todos usuários."""
 
-    schema = AutoSchema(tags=["usuarios"])
+    schema = AutoSchema(tags=["Usuários"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -32,7 +32,7 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     """Detalhes do usuário."""
 
-    schema = AutoSchema(tags=["usuarios"])
+    schema = AutoSchema(tags=["Usuários"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -48,7 +48,7 @@ class UserDetail(generics.RetrieveAPIView):
 class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     """Lista todos produtos, ou cria um novo produto."""
 
-    schema = AutoSchema(tags=["produtos"])
+    schema = AutoSchema(tags=["Produtos"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -69,7 +69,7 @@ class ProdutoList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gener
 
 class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
     
-    schema = AutoSchema(tags=["produtos"])
+    schema = AutoSchema(tags=["Produtos"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -94,7 +94,7 @@ class ProdutoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
 class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     """Lista todas categorias, ou cria uma nova categoria."""
 
-    schema = AutoSchema(tags=["categorias"])
+    schema = AutoSchema(tags=["Categorias"])
 
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -115,7 +115,7 @@ class CategoriaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gen
 
 class CategoriaDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
     
-    schema = AutoSchema(tags=["categorias"])
+    schema = AutoSchema(tags=["Categorias"])
     
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
